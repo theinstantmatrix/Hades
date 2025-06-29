@@ -1,3 +1,8 @@
+Hades (with unofficial binaries for Windows ARM64/AArch64 + x86-64, fork of [hades-emu/Hades](https://github.com/hades-emu/Hades)).  
+Downloads are hosted at the [releases](https://github.com/theinstantmatrix/Hades/releases) section.
+
+---
+
 # 🔥 Hades
 
 ![license](https://img.shields.io/github/license/hades-emu/hades)
@@ -9,16 +14,7 @@
 
 ## Screenshots
 
-<p align="center">
-  <img src="https://i.imgur.com/29JPzmU.png">
-  <img src="https://i.imgur.com/kyEfEam.png">
-  <img src="https://i.imgur.com/c84TjGW.png">
-</p>
-<p align="center">
-  <img src="https://i.imgur.com/WGCHWJv.png">
-  <img src="https://i.imgur.com/0LMmkRD.png">
-  <img src="https://i.imgur.com/pbdR5AN.png">
-</p>
+[removed]
 
 ## Features
 

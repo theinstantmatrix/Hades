@@ -1,0 +1,58 @@
+name: Build Hades
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        include:
+          - os: windows-11-arm
+            ARTIFACT_PREFIX: winarm64
+            MSYS2_SYS: CLANGARM64
+          - os: windows-latest
+            ARTIFACT_PREFIX: win64
+            MSYS2_SYS: UCRT64
+    steps:
+      - name: 'Configure git: core.autocrlf, core.eol'
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.MSYS2_SYS}}
+          update: true
+          pacboy: >-
+            ca-certificates:p
+            glew:p
+            libarchive:p
+            meson:p
+            ninja:p
+            sdl3:p
+            toolchain:p
+      - name: Build
+        shell: msys2 {0}
+        run: |
+          meson setup --buildtype=release -Dstatic_executable=true build .
+          cd build
+          meson compile
+      - name: Copy files
+        shell: msys2 {0}
+        run: |
+          mkdir upload
+          cp build/*.exe upload
+          cp LICENSE.md upload/license.md
+          strip upload/*.exe
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: Hades-git-${{matrix.ARTIFACT_PREFIX}}-${{github.sha}}
+          path: upload
+          if-no-files-found: error
